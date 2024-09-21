@@ -43,15 +43,22 @@ public final class LuckPermsTab extends JavaPlugin {
     }
 
     public String getGroupPrefix(String groupName) {
+        if (groupName == null) {
+            return null;
+        }
+
         return groupPrefixCache.computeIfAbsent(groupName, name -> {
             Group group = luckPermsInstance.getGroupManager().getGroup(name);
-            if (group == null) return null;
+            if (group == null) {
+                return null;
+            }
             return ChatColor.translateAlternateColorCodes('&', group.getNodes(NodeType.PREFIX).stream()
                     .map(PrefixNode::getMetaValue)
                     .findFirst()
-                    .orElse(null));
+                    .orElse(""));
         });
     }
+
 
     @Override
     public void onDisable() {

@@ -1,7 +1,6 @@
 package com.lsdevcloud.luckpermstab.listener;
 
 import com.lsdevcloud.luckpermstab.LuckPermsTab;
-import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -13,22 +12,21 @@ public final class ChatListener implements Listener {
 
     @EventHandler
     public void on(final AsyncPlayerChatEvent event) {
-
-        final Player player = event.getPlayer();
+        Player player = event.getPlayer();
         String message = event.getMessage();
 
         if (player.hasPermission("chat.color")) {
             message = ChatColor.translateAlternateColorCodes('&', message);
         }
 
-        final LuckPermsTab plugin = LuckPermsTab.getInstance();
-        final User user = plugin.getLuckPermsInstance().getUserManager().getUser(player.getUniqueId());
+        LuckPermsTab plugin = LuckPermsTab.getInstance();
+        User user = plugin.getLuckPermsInstance().getUserManager().getUser(player.getUniqueId());
 
         if (user != null) {
-            final Group group = plugin.getLuckPermsInstance().getGroupManager().getGroup(user.getPrimaryGroup());
-
-            if (group == null) return;
-            event.setFormat(plugin.getGroupPrefix(group.getName()) + player.getName() + ChatColor.DARK_GRAY + " » " + ChatColor.GRAY + message);
+            String primaryGroup = user.getPrimaryGroup();
+            String prefix = plugin.getGroupPrefix(primaryGroup);
+            event.setFormat(prefix + player.getName() + ChatColor.DARK_GRAY + " » " + ChatColor.GRAY + message);
         }
     }
+
 }
