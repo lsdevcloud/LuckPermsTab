@@ -1,0 +1,4 @@
+name: LuckPermsTab
+version: '${project.version}'
+main: com.lsdevcloud.luckpermstab.LuckPermsTab
+api-version: '1.19'
