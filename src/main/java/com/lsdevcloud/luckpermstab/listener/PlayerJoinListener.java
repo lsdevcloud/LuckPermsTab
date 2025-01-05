@@ -3,12 +3,16 @@ package com.lsdevcloud.luckpermstab.listener;
 import com.lsdevcloud.luckpermstab.LuckPermsTab;
 import net.luckperms.api.model.group.Group;
 import net.luckperms.api.model.user.User;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitScheduler;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 public final class PlayerJoinListener implements Listener {
 
@@ -32,10 +36,10 @@ public final class PlayerJoinListener implements Listener {
         }
 
         String prefix = plugin.getGroupPrefix(group.getName());
-        setPlayerDisplayName(prefix, player);
+        setPlayerDisplayName(group, prefix, player);
     }
 
-    public static void setPlayerDisplayName(final String prefix, final Player player) {
+    public static void setPlayerDisplayName(final Group group, final String prefix, final Player player) {
         if (prefix == null) {
             LuckPermsTab.getInstance().getLogger().warning("Prefix is null for player: " + player.getName());
             return;
@@ -44,5 +48,9 @@ public final class PlayerJoinListener implements Listener {
         String displayName = prefix + player.getName();
         player.setDisplayName(displayName);
         player.setPlayerListName(displayName);
+        player.setCustomName(displayName);
+        player.setCustomNameVisible(true);
+        player.setPlayerListOrder(group.getWeight().orElse(1));
+
     }
 }
