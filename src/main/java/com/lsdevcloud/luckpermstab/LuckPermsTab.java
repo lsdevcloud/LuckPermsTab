@@ -1,6 +1,7 @@
 package com.lsdevcloud.luckpermstab;
 
 import com.lsdevcloud.luckpermstab.listener.ChatListener;
+import com.lsdevcloud.luckpermstab.listener.LuckPermsListeners;
 import com.lsdevcloud.luckpermstab.listener.PlayerJoinListener;
 import lombok.Getter;
 import net.luckperms.api.LuckPerms;
@@ -42,6 +43,8 @@ public final class LuckPermsTab extends JavaPlugin {
         // register listeners
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+
+        new LuckPermsListeners(luckPermsInstance);
 
         getLogger().info(ChatColor.GREEN + "LuckPermsTab has been enabled successfully!");
     }
