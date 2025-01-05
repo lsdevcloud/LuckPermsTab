@@ -41,7 +41,7 @@ public final class PlayerJoinListener implements Listener {
             return;
         }
 
-        String displayName = prefix + ChatColor.GRAY + player.getName();
+        String displayName = prefix + player.getName();
         player.setDisplayName(displayName);
         player.setPlayerListName(displayName);
     }
